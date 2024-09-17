@@ -197,16 +197,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Container(
-                                        color:Colors.red ,
-                                        child: SizedBox(
-                                          width: MediaQuery.of(context).size.width - 170,
-                                          child: Text(
-                                            '${state.filmsPopular[index].title}\n',
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: const TextStyle(fontWeight: FontWeight.bold),
-                                          ),
+                                      SizedBox(
+                                        width: MediaQuery.of(context).size.width - 170,
+                                        child: Text(
+                                          '${state.filmsPopular[index].title}\n',
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(fontWeight: FontWeight.bold),
                                         ),
                                       ),
                                       RichText(
