@@ -6,7 +6,8 @@ class HomeState  with _$HomeState{
     required final StateStatus stateStatus,
     required final List<MovieEntity> filmsNowPlaying,
     required final List<MovieEntity> filmsPopular,
-    required final List<MovieDetailEntity> movieDetail
+    required final List<MovieDetailEntity> movieDetail,
+    required final List<CastEntity> movieCasts
   }) = _HomeState;
 }
 

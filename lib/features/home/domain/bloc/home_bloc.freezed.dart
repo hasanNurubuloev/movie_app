@@ -545,11 +545,228 @@ abstract class _MovieDetails implements HomeGetMovieDetailsEvent {
 }
 
 /// @nodoc
+mixin _$HomeGetMoviesCast {
+  int get idMovie => throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int idMovie) getMoviesCast,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(int idMovie)? getMoviesCast,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int idMovie)? getMoviesCast,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_MoviesCast value) getMoviesCast,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_MoviesCast value)? getMoviesCast,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_MoviesCast value)? getMoviesCast,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+
+  /// Create a copy of HomeGetMoviesCast
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $HomeGetMoviesCastCopyWith<HomeGetMoviesCast> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $HomeGetMoviesCastCopyWith<$Res> {
+  factory $HomeGetMoviesCastCopyWith(
+          HomeGetMoviesCast value, $Res Function(HomeGetMoviesCast) then) =
+      _$HomeGetMoviesCastCopyWithImpl<$Res, HomeGetMoviesCast>;
+  @useResult
+  $Res call({int idMovie});
+}
+
+/// @nodoc
+class _$HomeGetMoviesCastCopyWithImpl<$Res, $Val extends HomeGetMoviesCast>
+    implements $HomeGetMoviesCastCopyWith<$Res> {
+  _$HomeGetMoviesCastCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of HomeGetMoviesCast
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? idMovie = null,
+  }) {
+    return _then(_value.copyWith(
+      idMovie: null == idMovie
+          ? _value.idMovie
+          : idMovie // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$MoviesCastImplCopyWith<$Res>
+    implements $HomeGetMoviesCastCopyWith<$Res> {
+  factory _$$MoviesCastImplCopyWith(
+          _$MoviesCastImpl value, $Res Function(_$MoviesCastImpl) then) =
+      __$$MoviesCastImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int idMovie});
+}
+
+/// @nodoc
+class __$$MoviesCastImplCopyWithImpl<$Res>
+    extends _$HomeGetMoviesCastCopyWithImpl<$Res, _$MoviesCastImpl>
+    implements _$$MoviesCastImplCopyWith<$Res> {
+  __$$MoviesCastImplCopyWithImpl(
+      _$MoviesCastImpl _value, $Res Function(_$MoviesCastImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of HomeGetMoviesCast
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? idMovie = null,
+  }) {
+    return _then(_$MoviesCastImpl(
+      null == idMovie
+          ? _value.idMovie
+          : idMovie // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$MoviesCastImpl implements _MoviesCast {
+  const _$MoviesCastImpl(this.idMovie);
+
+  @override
+  final int idMovie;
+
+  @override
+  String toString() {
+    return 'HomeGetMoviesCast.getMoviesCast(idMovie: $idMovie)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$MoviesCastImpl &&
+            (identical(other.idMovie, idMovie) || other.idMovie == idMovie));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, idMovie);
+
+  /// Create a copy of HomeGetMoviesCast
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$MoviesCastImplCopyWith<_$MoviesCastImpl> get copyWith =>
+      __$$MoviesCastImplCopyWithImpl<_$MoviesCastImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int idMovie) getMoviesCast,
+  }) {
+    return getMoviesCast(idMovie);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(int idMovie)? getMoviesCast,
+  }) {
+    return getMoviesCast?.call(idMovie);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int idMovie)? getMoviesCast,
+    required TResult orElse(),
+  }) {
+    if (getMoviesCast != null) {
+      return getMoviesCast(idMovie);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_MoviesCast value) getMoviesCast,
+  }) {
+    return getMoviesCast(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_MoviesCast value)? getMoviesCast,
+  }) {
+    return getMoviesCast?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_MoviesCast value)? getMoviesCast,
+    required TResult orElse(),
+  }) {
+    if (getMoviesCast != null) {
+      return getMoviesCast(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _MoviesCast implements HomeGetMoviesCast {
+  const factory _MoviesCast(final int idMovie) = _$MoviesCastImpl;
+
+  @override
+  int get idMovie;
+
+  /// Create a copy of HomeGetMoviesCast
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$MoviesCastImplCopyWith<_$MoviesCastImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$HomeState {
   StateStatus get stateStatus => throw _privateConstructorUsedError;
   List<MovieEntity> get filmsNowPlaying => throw _privateConstructorUsedError;
   List<MovieEntity> get filmsPopular => throw _privateConstructorUsedError;
   List<MovieDetailEntity> get movieDetail => throw _privateConstructorUsedError;
+  List<CastEntity> get movieCasts => throw _privateConstructorUsedError;
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.
@@ -567,7 +784,8 @@ abstract class $HomeStateCopyWith<$Res> {
       {StateStatus stateStatus,
       List<MovieEntity> filmsNowPlaying,
       List<MovieEntity> filmsPopular,
-      List<MovieDetailEntity> movieDetail});
+      List<MovieDetailEntity> movieDetail,
+      List<CastEntity> movieCasts});
 
   $StateStatusCopyWith<$Res> get stateStatus;
 }
@@ -591,6 +809,7 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
     Object? filmsNowPlaying = null,
     Object? filmsPopular = null,
     Object? movieDetail = null,
+    Object? movieCasts = null,
   }) {
     return _then(_value.copyWith(
       stateStatus: null == stateStatus
@@ -609,6 +828,10 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
           ? _value.movieDetail
           : movieDetail // ignore: cast_nullable_to_non_nullable
               as List<MovieDetailEntity>,
+      movieCasts: null == movieCasts
+          ? _value.movieCasts
+          : movieCasts // ignore: cast_nullable_to_non_nullable
+              as List<CastEntity>,
     ) as $Val);
   }
 
@@ -635,7 +858,8 @@ abstract class _$$HomeStateImplCopyWith<$Res>
       {StateStatus stateStatus,
       List<MovieEntity> filmsNowPlaying,
       List<MovieEntity> filmsPopular,
-      List<MovieDetailEntity> movieDetail});
+      List<MovieDetailEntity> movieDetail,
+      List<CastEntity> movieCasts});
 
   @override
   $StateStatusCopyWith<$Res> get stateStatus;
@@ -658,6 +882,7 @@ class __$$HomeStateImplCopyWithImpl<$Res>
     Object? filmsNowPlaying = null,
     Object? filmsPopular = null,
     Object? movieDetail = null,
+    Object? movieCasts = null,
   }) {
     return _then(_$HomeStateImpl(
       stateStatus: null == stateStatus
@@ -676,6 +901,10 @@ class __$$HomeStateImplCopyWithImpl<$Res>
           ? _value._movieDetail
           : movieDetail // ignore: cast_nullable_to_non_nullable
               as List<MovieDetailEntity>,
+      movieCasts: null == movieCasts
+          ? _value._movieCasts
+          : movieCasts // ignore: cast_nullable_to_non_nullable
+              as List<CastEntity>,
     ));
   }
 }
@@ -687,10 +916,12 @@ class _$HomeStateImpl implements _HomeState {
       {required this.stateStatus,
       required final List<MovieEntity> filmsNowPlaying,
       required final List<MovieEntity> filmsPopular,
-      required final List<MovieDetailEntity> movieDetail})
+      required final List<MovieDetailEntity> movieDetail,
+      required final List<CastEntity> movieCasts})
       : _filmsNowPlaying = filmsNowPlaying,
         _filmsPopular = filmsPopular,
-        _movieDetail = movieDetail;
+        _movieDetail = movieDetail,
+        _movieCasts = movieCasts;
 
   @override
   final StateStatus stateStatus;
@@ -718,9 +949,17 @@ class _$HomeStateImpl implements _HomeState {
     return EqualUnmodifiableListView(_movieDetail);
   }
 
+  final List<CastEntity> _movieCasts;
+  @override
+  List<CastEntity> get movieCasts {
+    if (_movieCasts is EqualUnmodifiableListView) return _movieCasts;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_movieCasts);
+  }
+
   @override
   String toString() {
-    return 'HomeState(stateStatus: $stateStatus, filmsNowPlaying: $filmsNowPlaying, filmsPopular: $filmsPopular, movieDetail: $movieDetail)';
+    return 'HomeState(stateStatus: $stateStatus, filmsNowPlaying: $filmsNowPlaying, filmsPopular: $filmsPopular, movieDetail: $movieDetail, movieCasts: $movieCasts)';
   }
 
   @override
@@ -735,7 +974,9 @@ class _$HomeStateImpl implements _HomeState {
             const DeepCollectionEquality()
                 .equals(other._filmsPopular, _filmsPopular) &&
             const DeepCollectionEquality()
-                .equals(other._movieDetail, _movieDetail));
+                .equals(other._movieDetail, _movieDetail) &&
+            const DeepCollectionEquality()
+                .equals(other._movieCasts, _movieCasts));
   }
 
   @override
@@ -744,7 +985,8 @@ class _$HomeStateImpl implements _HomeState {
       stateStatus,
       const DeepCollectionEquality().hash(_filmsNowPlaying),
       const DeepCollectionEquality().hash(_filmsPopular),
-      const DeepCollectionEquality().hash(_movieDetail));
+      const DeepCollectionEquality().hash(_movieDetail),
+      const DeepCollectionEquality().hash(_movieCasts));
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.
@@ -760,7 +1002,8 @@ abstract class _HomeState implements HomeState {
       {required final StateStatus stateStatus,
       required final List<MovieEntity> filmsNowPlaying,
       required final List<MovieEntity> filmsPopular,
-      required final List<MovieDetailEntity> movieDetail}) = _$HomeStateImpl;
+      required final List<MovieDetailEntity> movieDetail,
+      required final List<CastEntity> movieCasts}) = _$HomeStateImpl;
 
   @override
   StateStatus get stateStatus;
@@ -770,6 +1013,8 @@ abstract class _HomeState implements HomeState {
   List<MovieEntity> get filmsPopular;
   @override
   List<MovieDetailEntity> get movieDetail;
+  @override
+  List<CastEntity> get movieCasts;
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.

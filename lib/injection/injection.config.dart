@@ -36,8 +36,8 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     final registerModule = _$RegisterModule();
-    gh.singleton<_i361.Dio>(() => registerModule.dio);
     gh.singleton<_i680.AppRouter>(() => _i680.AppRouter());
+    gh.singleton<_i361.Dio>(() => registerModule.dio);
     gh.singleton<_i811.HttpClient>(() => _i811.HttpClient(gh<_i361.Dio>()));
     gh.factory<_i868.HomeDataSource>(
         () => _i756.HomeDataSourceImpl(gh<_i811.HttpClient>()));

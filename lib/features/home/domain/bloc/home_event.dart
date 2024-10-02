@@ -14,3 +14,7 @@ class HomeGetPopularEvent extends HomeEvent with _$HomeGetPopularEvent {
 class HomeGetMovieDetailsEvent extends HomeEvent with _$HomeGetMovieDetailsEvent {
   const factory HomeGetMovieDetailsEvent.getMovieDetails(int idMovie) = _MovieDetails;
 }
+@freezed
+class HomeGetMoviesCast extends HomeEvent with _$HomeGetMoviesCast {
+  const factory HomeGetMoviesCast.getMoviesCast(int idMovie) = _MoviesCast;
+}

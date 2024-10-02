@@ -4,5 +4,6 @@ class HttpPath{
   static const getPopular = '$baseUrl/popular';
   static const baseUrlImages = 'https://image.tmdb.org/t/p/original';
   static getMovieDetail(int idMovie) => '$baseUrl/$idMovie';
+  static getCast(int idMovie) => '$baseUrl/$idMovie/credits';
 
 }

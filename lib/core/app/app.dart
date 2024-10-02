@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
-import 'package:movie_app/features/home/presentation/home_screen.dart';
+import 'package:movie_app/core/app/router/app_router.dart';
+import 'package:movie_app/injection/injection.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -8,13 +8,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      routerConfig: getIt<AppRouter>().config(),
+      // home: const HomeScreen(),
     );
   }
 }

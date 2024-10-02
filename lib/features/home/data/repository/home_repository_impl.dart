@@ -5,13 +5,14 @@ import 'package:injectable/injectable.dart';
 import 'package:movie_app/core/network/entity/failure.dart';
 import 'package:movie_app/core/network/http_path.dart';
 import 'package:movie_app/features/home/data/data_source/home_data_source.dart';
+import 'package:movie_app/features/home/domain/entity/cast_entity.dart';
 import 'package:movie_app/features/home/domain/entity/movie_detail_entity.dart';
 import 'package:movie_app/features/home/domain/entity/movie_entity.dart';
 import 'package:movie_app/features/home/domain/repository/home_repository.dart';
 
 @Injectable(as: HomeRepository)
 class HomeRepositoryImpl extends HomeRepository {
-  HomeDataSource _dataSource;
+  final HomeDataSource _dataSource;
 
   HomeRepositoryImpl(this._dataSource);
 
@@ -38,7 +39,7 @@ class HomeRepositoryImpl extends HomeRepository {
   }
 
   @override
-  Future<Either<Failure, List<MovieEntity>>> getPopular(List<String> genresList) async {
+  Future<Either<Failure, List<MovieEntity>>> getPopular(List<String> genresList, int duration) async {
     try {
       final response = await _dataSource.getPopular();
       List<MovieEntity> popularFilms = response
@@ -48,7 +49,7 @@ class HomeRepositoryImpl extends HomeRepository {
               title: e.title,
               rating: e.voteAverage,
               genreslist: genresList,
-              duration: '99'))
+              duration: duration.toString()))
           .toList();
       return Right(popularFilms);
     } catch (e) {
@@ -57,12 +58,31 @@ class HomeRepositoryImpl extends HomeRepository {
   }
 
   @override
-  Future<Either<Failure, MovieDetailEntity>> getMovieDetail(int idMovie) async {
+  Future<Either<Failure, MovieDetailEntity>> getMovieDetail(int idMovie, List<CastEntity> listCast) async {
     try {
       final response = await _dataSource.getMovieDetail(idMovie);
-      MovieDetailEntity movieDetail =
-      MovieDetailEntity(listGenres: response.genres.map((e) => e.nameMovie).toList(), duration: response.runtime, name: response.originalTitle);
+      MovieDetailEntity movieDetail = MovieDetailEntity(
+          listGenres: response.genres.map((e) => e.nameMovie).toList(),
+          duration: response.runtime,
+          name: response.originalTitle,
+          originalLanguage: response.originalLanguage,
+          overview: response.overview,
+          spokenLanguage: response.spokenLanguage,
+          voteAverage: response.voteAverage,
+          listCast: listCast
+      );
       return Right(movieDetail);
+    } catch (e) {
+      return Left(Failure.request());
+    }
+  }
+
+  @override
+  Future<Either<Failure, CastEntity>> getCast(int idMovie) async {
+    try {
+      final response = await _dataSource.getCast(idMovie);
+      CastEntity castEntity = CastEntity(name: response.name ?? 'error', profilePath: response.profilePath ?? 'error');
+      return Right(castEntity);
     } catch (e) {
       return Left(Failure.request());
     }

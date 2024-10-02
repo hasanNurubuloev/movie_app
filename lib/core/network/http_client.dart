@@ -22,7 +22,7 @@ class HttpClient {
   }
 
   void _addPrivateInterceptors() async {
-    _dio.interceptors.add(PrettyDioLogger());
+    // _dio.interceptors.add(PrettyDioLogger());
     _dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
       _addPrivateHeaders(options);
       return handler.next(options);
@@ -66,9 +66,9 @@ class HttpClient {
         void Function(int, int)? onReceiveProgress,
         bool isSecure = true,
         bool isRefresh = false,
-      }) {
+      }) async {
     _switchInterceptor(isSecure, isRefresh);
-    return _dio.get(
+    return await _dio.get(
       path,
       queryParameters: queryParameters,
       options: options,
