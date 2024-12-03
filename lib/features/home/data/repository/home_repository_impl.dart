@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:fpdart/src/either.dart';
 import 'package:injectable/injectable.dart';
 import 'package:movie_app/core/network/entity/failure.dart';
@@ -19,9 +17,7 @@ class HomeRepositoryImpl extends HomeRepository {
   @override
   Future<Either<Failure, List<MovieEntity>>> getNowPlaying(List<String> genresList) async {
     try {
-      debugPrint('Reuest____________________________________________________--');
       final result = await _dataSource.getNowPlaying();
-      print('---------Result request $result');
       List<MovieEntity> filmsList = result
           .map((e) => MovieEntity(
               id: e.id,
@@ -62,6 +58,7 @@ class HomeRepositoryImpl extends HomeRepository {
     try {
       final response = await _dataSource.getMovieDetail(idMovie);
       MovieDetailEntity movieDetail = MovieDetailEntity(
+          id: response.id,
           listGenres: response.genres.map((e) => e.nameMovie).toList(),
           duration: response.runtime,
           name: response.originalTitle,
@@ -69,8 +66,7 @@ class HomeRepositoryImpl extends HomeRepository {
           overview: response.overview,
           spokenLanguage: response.spokenLanguage,
           voteAverage: response.voteAverage,
-          listCast: listCast
-      );
+          listCast: listCast);
       return Right(movieDetail);
     } catch (e) {
       return Left(Failure.request());
@@ -78,22 +74,16 @@ class HomeRepositoryImpl extends HomeRepository {
   }
 
   @override
-  Future<Either<Failure, CastEntity>> getCast(int idMovie) async {
+  Future<Either<Failure, List<CastEntity>>> getCast(int idMovie) async {
     try {
       final response = await _dataSource.getCast(idMovie);
-      CastEntity castEntity = CastEntity(name: response.name ?? 'error', profilePath: response.profilePath ?? 'error');
-      return Right(castEntity);
-    } catch (e) {
-      return Left(Failure.request());
-    }
-  }
-
-  @override
-  Future<Either<Failure, List<String>>> getGenres(int idMovie) async {
-    try {
-      final response = await _dataSource.getGenres(idMovie);
-      List<String> listGenres = response.map((e) => response.map((e) => e.nameMovie)).cast<String>().toList();
-      return Right(listGenres);
+      final result = response
+          .map((e) => CastEntity(
+                name: e.name ?? 'error',
+                profilePath: e.profilePath != null ? HttpPath.baseUrlImages + e.profilePath! : 'error',
+              ))
+          .toList();
+      return Right(result);
     } catch (e) {
       return Left(Failure.request());
     }

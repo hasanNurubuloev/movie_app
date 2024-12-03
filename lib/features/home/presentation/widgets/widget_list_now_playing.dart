@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:movie_app/core/app/router/app_router.gr.dart';
-import 'package:movie_app/core/network/entity/state_status.dart';
 import 'package:movie_app/features/home/domain/bloc/home_bloc.dart';
 
 class SliverWidgetListNowPlaying extends StatefulWidget {
@@ -22,11 +21,24 @@ class _SliverWidgetListNowPlayingState extends State<SliverWidgetListNowPlaying>
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: BlocConsumer<HomeBloc, HomeState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          state.stateStatus.whenOrNull(success: (val) {
+            if (val is String && state.filmsNowPlaying.isNotEmpty) {
+              for (var e in state.filmsNowPlaying) {
+                context.read<HomeBloc>().add(HomeGetMoviesNowPlayingCast.getMoviesNowPlayingCast(e.id));
+              }
+            }
+
+              for (var e in state.filmsNowPlaying) {
+                final cast = state.movieNowPlayingCasts[e.id];
+                if (cast != null) {
+                  context.read<HomeBloc>().add(
+                      HomeGetMovieNowPlayingDetailEvent.getMovieNowPlayingDetail(e.id, cast));
+                }
+              }
+          });
+        },
         builder: (context, state) {
-          if (state.stateStatus is SuccessStatus) {
-            print('ololo $state');
-          }
           return SizedBox(
             height: 264,
             child: ListView.builder(
@@ -35,12 +47,9 @@ class _SliverWidgetListNowPlayingState extends State<SliverWidgetListNowPlaying>
                 itemBuilder: (_, index) {
                   return GestureDetector(
                     onTap: () {
-                      state.movieDetail.forEach((e) => print(e.toString()));
-                      // state.movieDetail.map((e) => print(e.name));
-                      // print('ololo det index $index name ${state.movieDetail[index].name}');
-                      // DetailMovieRoute(movieDetailEntity: state.movieDetail[index].listCast)
-                      context.router.push(DetailMovieRoute(movieDetailEntity: state.movieDetail[index]));
-                      print("onTap now");
+                      print('ololo ${index}');
+                      final movieDetail = state.movieDetailNowPlaying[index];
+                      context.router.push(DetailMovieRoute(movieDetailEntity: movieDetail, listCastEntity:state.movieNowPlayingCasts[movieDetail.id] ?? []));
                     },
                     child: SizedBox(
                       width: 140,

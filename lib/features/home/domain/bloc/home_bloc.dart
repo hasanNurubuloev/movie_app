@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:movie_app/core/network/entity/state_status.dart';
@@ -18,16 +19,23 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final HomeRepository _repository;
 
   HomeBloc(this._repository)
-      : super(const HomeState(
+      : super(
+          const HomeState(
             stateStatus: StateStatus.initial(),
             filmsNowPlaying: [],
             filmsPopular: [],
-            movieDetail: [],
-            movieCasts: [])) {
+            movieDetailNowPlaying: [],
+            movieDetailPopular: [],
+            movieNowPlayingCasts: {},
+            moviePopularCasts: {},
+          ),
+        ) {
     on<_NowPlayingFilms>(_onGetNowPlaying);
     on<_PopularFilms>(_onGetPopular);
-    on<_MovieDetails>(_onGetMoviesDetail);
-    on<_MoviesCast>(_onGetMoviesCast);
+    on<_MovieDetailNowPlaying>(_onGetMoviesDetailNowPlaying, transformer: sequential());
+    on<_MovieDetailsPopular>(_onGetMoviesDetailPopular, transformer: sequential());
+    on<_MoviesCastNowPlaying>(_onGetMoviesNowPlayingCast, transformer: sequential());
+    on<_MoviesPopularCast>(_onGetMoviesPopularCast, transformer: sequential());
   }
 
   FutureOr<void> _onGetNowPlaying(_NowPlayingFilms event, Emitter<HomeState> emit) async {
@@ -37,7 +45,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     result.fold((l) {
       emit(state.copyWith(stateStatus: StateStatus.failure(message: l.message ?? l.toString())));
     }, (r) {
-      emit(state.copyWith(stateStatus: const StateStatus.success(), filmsNowPlaying: r));
+      emit(state.copyWith(stateStatus: const StateStatus.success('now'), filmsNowPlaying: r));
     });
   }
 
@@ -52,30 +60,54 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     });
   }
 
-  FutureOr<void> _onGetMoviesDetail(_MovieDetails event, Emitter<HomeState> emit) async {
+  FutureOr<void> _onGetMoviesDetailPopular(_MovieDetailsPopular event, Emitter<HomeState> emit) async {
     emit(state.copyWith(stateStatus: const StateStatus.loading()));
     final result = await _repository.getMovieDetail(event.idMovie, []);
 
     result.fold((l) {
       emit(state.copyWith(stateStatus: StateStatus.failure(message: l.message ?? l.toString())));
     }, (r) {
-      List<MovieDetailEntity> moviesDetailList = [...state.movieDetail];
-
+      List<MovieDetailEntity> moviesDetailList = [...state.movieDetailPopular];
       moviesDetailList.add(r);
-      emit(state.copyWith(stateStatus: const StateStatus.success(), movieDetail: moviesDetailList));
+      emit(state.copyWith(stateStatus: const StateStatus.success(), movieDetailPopular: moviesDetailList));
     });
   }
 
-  FutureOr<void> _onGetMoviesCast(_MoviesCast event, Emitter<HomeState> emit) async {
+  FutureOr<void> _onGetMoviesPopularCast(_MoviesPopularCast event, Emitter<HomeState> emit) async {
     emit(state.copyWith(stateStatus: const StateStatus.loading()));
     final result = await _repository.getCast(event.idMovie);
 
     result.fold((l) {
       emit(state.copyWith(stateStatus: StateStatus.failure(message: l.message ?? l.toString())));
     }, (r) {
-      List<CastEntity> castEntityList = [...state.movieCasts];
-      castEntityList.add(r);
-      emit(state.copyWith(stateStatus: const StateStatus.success(true), movieCasts: castEntityList));
+      final updatedCastsMap = Map<int, List<CastEntity>>.from(state.moviePopularCasts);
+      updatedCastsMap[event.idMovie] = r;
+      emit(state.copyWith(stateStatus: const StateStatus.success(true), moviePopularCasts: updatedCastsMap));
+    });
+  }
+  FutureOr<void> _onGetMoviesDetailNowPlaying(_MovieDetailNowPlaying event, Emitter<HomeState> emit) async {
+    emit(state.copyWith(stateStatus: const StateStatus.loading()));
+    final result = await _repository.getMovieDetail(event.idMovie, event.listCast);
+
+    result.fold((l) {
+      emit(state.copyWith(stateStatus: StateStatus.failure(message: l.message ?? l.toString())));
+    }, (r) {
+      List<MovieDetailEntity> moviesDetailList = [...state.movieDetailNowPlaying];
+      moviesDetailList.add(r);
+      emit(state.copyWith(stateStatus: const StateStatus.success(), movieDetailNowPlaying: moviesDetailList));
+    });
+  }
+
+  FutureOr<void> _onGetMoviesNowPlayingCast(_MoviesCastNowPlaying event, Emitter<HomeState> emit) async {
+    emit(state.copyWith(stateStatus: const StateStatus.loading()));
+    final result = await _repository.getCast(event.idMovie);
+
+    result.fold((l) {
+      emit(state.copyWith(stateStatus: StateStatus.failure(message: l.message ?? l.toString())));
+    }, (r) {
+      final updatedCastsMap = Map<int, List<CastEntity>>.from(state.movieNowPlayingCasts);
+      updatedCastsMap[event.idMovie] = r;
+      emit(state.copyWith(stateStatus: const StateStatus.success(true), movieNowPlayingCasts: updatedCastsMap));
     });
   }
 }

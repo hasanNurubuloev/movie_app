@@ -5,10 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:movie_app/core/app/router/app_router.gr.dart';
 import 'package:movie_app/features/home/domain/bloc/home_bloc.dart';
+import 'package:movie_app/features/home/presentation/widgets/widget_list_genres.dart';
 
 class SliverWidgetListPopular extends StatelessWidget {
   static final customCacheManager =
-  CacheManager(Config('customCacheKey', stalePeriod: const Duration(days: 15), maxNrOfCacheObjects: 100));
+      CacheManager(Config('customCacheKey', stalePeriod: const Duration(days: 15), maxNrOfCacheObjects: 100));
 
   const SliverWidgetListPopular({
     super.key,
@@ -20,18 +21,16 @@ class SliverWidgetListPopular extends StatelessWidget {
       child: BlocConsumer<HomeBloc, HomeState>(
         listener: (context, state) {
           state.stateStatus.whenOrNull(success: (val) {
-            if (val is bool && state.filmsPopular.isNotEmpty && state.movieDetail.isEmpty) {
+            if (val is bool && state.filmsPopular.isNotEmpty && state.movieDetailPopular.isEmpty) {
               for (var e in state.filmsPopular) {
-                print('ololo id  ${e.id}');
-                context.read<HomeBloc>().add(HomeGetMovieDetailsEvent.getMovieDetails(e.id));
-                context.read<HomeBloc>().add(HomeGetMoviesCast.getMoviesCast(e.id));
+                context.read<HomeBloc>().add(HomeGetMovieDetailsPopularEvent.getMovieDetailsPopular(e.id));
+               context.read<HomeBloc>().add(HomeGetMoviesPopularCast.getMoviesPopularCast(e.id));
               }
             }
           });
         },
         builder: (context, state) {
-          debugPrint('olololololololo ${state.movieDetail.length} == ${state.filmsPopular.length}');
-          if (state.movieDetail.length != state.filmsPopular.length && state.filmsPopular.isNotEmpty) {
+          if (state.movieDetailPopular.length != state.filmsPopular.length && state.filmsPopular.isNotEmpty) {
             return const SizedBox();
           }
           return SizedBox(
@@ -41,8 +40,11 @@ class SliverWidgetListPopular extends StatelessWidget {
               itemCount: state.filmsPopular.length,
               itemBuilder: (_, index) {
                 return GestureDetector(
-                  onTap: (){
-                    context.router.push(DetailMovieRoute(movieDetailEntity: state.movieDetail[index]));
+                  onTap: () {
+                    final movieDetail = state.movieDetailPopular[index];
+
+                    context.router.push(DetailMovieRoute(
+                        movieDetailEntity: movieDetail, listCastEntity: state.moviePopularCasts[movieDetail.id] ?? []));
                   },
                   child: SizedBox(
                     height: 140,
@@ -59,13 +61,12 @@ class SliverWidgetListPopular extends StatelessWidget {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            padding: const EdgeInsets.only(left: 16),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(
-                                  width: MediaQuery.of(context).size.width - 170,
                                   child: Text(
                                     '${state.filmsPopular[index].title}\n',
                                     maxLines: 2,
@@ -93,38 +94,7 @@ class SliverWidgetListPopular extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                SizedBox(
-                                  width: MediaQuery.of(context).size.width - 164,
-                                  height: 20,
-                                  child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: state.movieDetail[index].listGenres.length,
-                                    itemBuilder: (_, i) {
-                                      return Row(
-                                        children: [
-                                          Container(
-                                            width: 60,
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: Colors.lightBlueAccent,
-                                              ),
-                                              borderRadius: BorderRadius.circular(20),
-                                            ),
-                                            child: Text(
-                                              state.movieDetail[index].listGenres[i],
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.blue[400],
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(width: 8)
-                                        ],
-                                      );
-                                    },
-                                  ),
-                                ),
+                                ListGenresWidget(listGenres: state.movieDetailPopular[index].listGenres),
                                 RichText(
                                   text: TextSpan(
                                     children: [
@@ -139,9 +109,9 @@ class SliverWidgetListPopular extends StatelessWidget {
                                         ),
                                       ),
                                       TextSpan(
-                                        text: state.movieDetail[index].duration > 60
-                                            ? '${(state.movieDetail[index].duration ~/ 60)}h ${state.movieDetail[index].duration % 60}m'
-                                            : '${state.movieDetail[index].duration}m',
+                                        text: state.movieDetailPopular[index].duration > 60
+                                            ? '${(state.movieDetailPopular[index].duration ~/ 60)}h ${state.movieDetailPopular[index].duration % 60}m'
+                                            : '${state.movieDetailPopular[index].duration}m',
                                         style: const TextStyle(color: Colors.grey, letterSpacing: 1),
                                       ),
                                     ],

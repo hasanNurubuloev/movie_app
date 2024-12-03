@@ -11,8 +11,6 @@ abstract class HomeRepository {
 
   Future<Either<Failure, MovieDetailEntity>> getMovieDetail(int idMovie, List<CastEntity> listCast);
 
-  Future<Either<Failure, CastEntity>> getCast(int idMovie);
-
-  Future<Either<Failure, List<String>>> getGenres(int idMovie);
+  Future<Either<Failure, List<CastEntity>>> getCast(int idMovie);
 
 }

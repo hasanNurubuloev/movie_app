@@ -2,6 +2,7 @@ import 'package:movie_app/features/home/data/model/spoken_language_model.dart';
 import 'package:movie_app/features/home/domain/entity/cast_entity.dart';
 
 class MovieDetailEntity {
+  final int? id;
   final String name;
   final double voteAverage;
   final List<String> listGenres;
@@ -12,7 +13,8 @@ class MovieDetailEntity {
   final List<CastEntity> listCast;
 
   MovieDetailEntity(
-      {required this.name,
+      {this.id,
+      required this.name,
       required this.voteAverage,
       required this.listGenres,
       required this.duration,
@@ -23,7 +25,6 @@ class MovieDetailEntity {
 
   @override
   String toString() {
-    return 'MovieDetailEntity{name: $name, voteAverage: $voteAverage, listGenres: $listGenres, duration: $duration, originalLanguage: $originalLanguage, spokenLanguage: $spokenLanguage, overview: $overview, listCast: $listCast}';
+    return 'MovieDetailEntity{id: $id,name: $name, voteAverage: $voteAverage, listGenres: $listGenres, duration: $duration, originalLanguage: $originalLanguage, spokenLanguage: $spokenLanguage, overview: $overview, listCast: $listCast}';
   }
 }
-

@@ -11,10 +11,18 @@ class HomeGetPopularEvent extends HomeEvent with _$HomeGetPopularEvent {
   const factory HomeGetPopularEvent.getPopularFilms() = _PopularFilms;
 }
 @freezed
-class HomeGetMovieDetailsEvent extends HomeEvent with _$HomeGetMovieDetailsEvent {
-  const factory HomeGetMovieDetailsEvent.getMovieDetails(int idMovie) = _MovieDetails;
+class HomeGetMovieDetailsPopularEvent extends HomeEvent with _$HomeGetMovieDetailsPopularEvent {
+  const factory HomeGetMovieDetailsPopularEvent.getMovieDetailsPopular(int idMovie) = _MovieDetailsPopular;
 }
 @freezed
-class HomeGetMoviesCast extends HomeEvent with _$HomeGetMoviesCast {
-  const factory HomeGetMoviesCast.getMoviesCast(int idMovie) = _MoviesCast;
+class HomeGetMovieNowPlayingDetailEvent extends HomeEvent with _$HomeGetMovieNowPlayingDetailEvent {
+  const factory HomeGetMovieNowPlayingDetailEvent.getMovieNowPlayingDetail(int idMovie, List<CastEntity> listCast) = _MovieDetailNowPlaying;
+}
+@freezed
+class HomeGetMoviesPopularCast extends HomeEvent with _$HomeGetMoviesPopularCast {
+  const factory HomeGetMoviesPopularCast.getMoviesPopularCast(int idMovie) = _MoviesPopularCast;
+}
+@freezed
+class HomeGetMoviesNowPlayingCast extends HomeEvent with _$HomeGetMoviesNowPlayingCast{
+  const factory HomeGetMoviesNowPlayingCast.getMoviesNowPlayingCast(int idMovie) = _MoviesCastNowPlaying;
 }

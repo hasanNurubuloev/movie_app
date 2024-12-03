@@ -9,9 +9,10 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i3;
-import 'package:flutter/material.dart' as _i5;
+import 'package:flutter/material.dart' as _i6;
 import 'package:movie_app/features/detail_movie/presentation/detail_movie_screen.dart'
     as _i1;
+import 'package:movie_app/features/home/domain/entity/cast_entity.dart' as _i5;
 import 'package:movie_app/features/home/domain/entity/movie_detail_entity.dart'
     as _i4;
 import 'package:movie_app/features/home/presentation/home_screen.dart' as _i2;
@@ -21,12 +22,14 @@ import 'package:movie_app/features/home/presentation/home_screen.dart' as _i2;
 class DetailMovieRoute extends _i3.PageRouteInfo<DetailMovieRouteArgs> {
   DetailMovieRoute({
     required _i4.MovieDetailEntity movieDetailEntity,
-    _i5.Key? key,
+    required List<_i5.CastEntity> listCastEntity,
+    _i6.Key? key,
     List<_i3.PageRouteInfo>? children,
   }) : super(
           DetailMovieRoute.name,
           args: DetailMovieRouteArgs(
             movieDetailEntity: movieDetailEntity,
+            listCastEntity: listCastEntity,
             key: key,
           ),
           initialChildren: children,
@@ -40,6 +43,7 @@ class DetailMovieRoute extends _i3.PageRouteInfo<DetailMovieRouteArgs> {
       final args = data.argsAs<DetailMovieRouteArgs>();
       return _i1.DetailMovieScreen(
         args.movieDetailEntity,
+        args.listCastEntity,
         key: args.key,
       );
     },
@@ -49,16 +53,19 @@ class DetailMovieRoute extends _i3.PageRouteInfo<DetailMovieRouteArgs> {
 class DetailMovieRouteArgs {
   const DetailMovieRouteArgs({
     required this.movieDetailEntity,
+    required this.listCastEntity,
     this.key,
   });
 
   final _i4.MovieDetailEntity movieDetailEntity;
 
-  final _i5.Key? key;
+  final List<_i5.CastEntity> listCastEntity;
+
+  final _i6.Key? key;
 
   @override
   String toString() {
-    return 'DetailMovieRouteArgs{movieDetailEntity: $movieDetailEntity, key: $key}';
+    return 'DetailMovieRouteArgs{movieDetailEntity: $movieDetailEntity, listCastEntity: $listCastEntity, key: $key}';
   }
 }
 

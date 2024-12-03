@@ -13,21 +13,35 @@ class CastModel {
   int? order;
 
   CastModel(
-      {this.adult, this.gender, this.id, this.knownForDepartment, this.name, this.originalName, this.popularity, this.profilePath, this.castIId, this.character, this.creditId, this.order});
+      {this.adult,
+      this.gender,
+      this.id,
+      this.knownForDepartment,
+      this.name,
+      this.originalName,
+      this.popularity,
+      this.profilePath,
+      this.castIId,
+      this.character,
+      this.creditId,
+      this.order});
 
-  CastModel.fromJson(Map<String, dynamic> json) {
-    adult = json['adult'];
-    gender = json['gender'];
-    id = json['id'];
-    knownForDepartment = json['known_for_department'];
-    name = json['name'];
-    originalName = json['original_name'];
-    popularity = json['popularity'];
-    profilePath = json['profile_path'];
-    castIId = json['cast_id'];
-    character = json['character'];
-    creditId = json['credit_id'];
-    order = json['order'];
+  factory CastModel.fromJson(Map<String, dynamic> json) {
+    return  CastModel(
+    id: json['id'],
+      knownForDepartment: json['known_for_department'],
+      adult: json['adult'],
+      gender: json['gender'],
+      name: json['name'],
+      originalName: json['original_name'],
+      popularity: json['popularity'],
+      profilePath: json['profile_path'],
+      castIId: json['cast_id'],
+      character: json['character'],
+      creditId: json['credit_id'],
+      order: json['order']
+    );
+
   }
 
   Map<String, dynamic> toJson() {
